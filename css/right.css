@@ -1,0 +1,8 @@
+@import url("global-styles.css");
+@import url("terminal-styles.css");
+@import url("cursor-styles.css");
+@import url("animations-styles.css");
+@import url("scanline-styles.css");
+@import url("settings-panel.css");
+@import url("crt-effects.css");
+@import url("viewer-styles.css");

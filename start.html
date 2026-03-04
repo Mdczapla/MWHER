@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HAMILTON MASTER BOOT</title>
+    <style>
+        body { background-color: #000; color: #00ff00; font-family: monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .boot-btn { background: transparent; color: #00ff00; border: 2px solid #00ff00; padding: 20px 40px; font-size: 24px; cursor: pointer; font-family: inherit; }
+        .boot-btn:hover { background: #00ff00; color: #000; }
+    </style>
+</head>
+<body>
+    <button id="boot-btn" class="boot-btn">[ INICJUJ SYSTEM HAMILTON ]</button>
+
+    <script>
+        document.getElementById('boot-btn').addEventListener('click', () => {
+            const windowFeatures = "location=no,menubar=no,toolbar=no,status=no,scrollbars=no";
+            
+            window.open('left.html', 'TerminalLeft', windowFeatures);
+            window.open('center.html', 'TerminalCenter', windowFeatures);
+            window.open('right.html', 'TerminalRight', windowFeatures);
+            
+            document.getElementById('boot-btn').innerText = "[ SYSTEM AKTYWNY ]";
+        });
+    </script>
+</body>
+</html>
