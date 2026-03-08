@@ -16,15 +16,11 @@ This project was created as an engineering thesis for educational and scientific
 
 1. Clone the repository to your local machine.
 2. Start server e.g. `npx http-server -p 8000`
-   *2.1. (Optional)* Use `-c-1` flag for disabling caching during development.
+   2.1. (Optional)* Use `-c-1` flag for disabling caching during development.
 3. Open `start.html`
 4. Start game
 
 ============================================
-
-### Configuration Guide
-
-All personal content, tasks, and system parameters are configured in `config.json`.
 
 ### References & Credits
 
