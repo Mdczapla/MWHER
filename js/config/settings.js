@@ -123,12 +123,6 @@ function openSettingsPanel() {
   content.className = 'settings-content';
 
   // Add all settings controls
-  addSelectControl(content, {
-    label: 'Color Theme:',
-    settingKey: 'theme',
-    options: THEMES,
-    onChange: (value) => applyTheme(value)
-  });
 
   addCheckboxControl(content, {
     label: 'Sounds:',
@@ -172,10 +166,30 @@ function openSettingsPanel() {
     }
   });
 
+  const clearCacheButton = createButton('Clear Cache & Reload', 'secondary', () => {
+    if (confirm('UWAGA: To usunie wszystkie zapisane stany gry, wyczyści pamięć przeglądarki i odświeży stronę. Kontynuować?')) {
+      clearSettings();
+      
+      localStorage.clear();
+      sessionStorage.clear();
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for(let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+
+      window.location.href = window.location.pathname + '?nocache=' + new Date().getTime();
+    }
+  });
+
   const cancelButton = createButton('Cancel', 'secondary', closePanel);
 
   buttonRow.appendChild(saveButton);
   buttonRow.appendChild(resetButton);
+  buttonRow.appendChild(clearCacheButton);
   buttonRow.appendChild(cancelButton);
 
   content.appendChild(buttonRow);

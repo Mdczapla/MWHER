@@ -48,7 +48,7 @@
     "Wciśnij ENTER, aby przejść dalej"
     ],
     "tutorial": [
-    "   [ MHER OS v2.4.1 - POMOC SYSTEMOWA ]",
+"   [ MHER OS v2.4.1 - POMOC SYSTEMOWA ]",
     "   ..................................................................",
     "   ",
     "   Witaj w środowisku testowym terminala. Poniższy samouczek wyjaśnia",
@@ -62,9 +62,15 @@
     "   > help",
     "   Wyświetla pełną listę dostępnych komend i programów.",
     "   ",
+    "   Klawisz TAB (Autouzupełnianie):",
+    "   Zacznij wpisywać komendę, nazwę pliku lub folderu i wciśnij TAB.",
+    "   System spróbuje automatycznie dokończyć wpisywaną frazę,",
+    "   co znacząco przyspiesza pracę pod presją czasu.",
+    "   ",
     "   Aby poruszać się po strukturze plików, używaj komendy cd:",
     "   > cd <nazwa_katalogu>  - Wejście do wskazanego folderu.",
     "   > cd ..                - Powrót do folderu nadrzędnego.",
+    "   > cd / lub cd root     - Powrót do folderu początkowego.",
     "   ",
     "   Układ Ekranów Pobocznych:",
     "   * Prawy Ekran: Wyświetla listę dostępnych plików. Aby przeczytać",
@@ -118,6 +124,7 @@
       "      - close: Zamyka podgląd i wraca do terminala.",
       "      - task [rozwiązanie]: Wykonanie zadania.",
       "      - theme [nazwa]: Zmienia motyw kolorystyczny.",
+      "      - tutorial: Wyświetla pomoc systemową.",
       "    ......................................................................................."
     ],
     "gameover": [
@@ -160,7 +167,7 @@
     ]
   },
   "settings": {
-    "enableSound": false,
+    "enableSound": true,
     "soundVolume": 0.3,
     "defaultFontSize": 16,
     "defaultFontFamily": "Courier New",

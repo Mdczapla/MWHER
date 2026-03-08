@@ -8,7 +8,7 @@ import { SQLTable_1, SQLTable_2, SQLTable_3 } from './constantsSQLTable.js';
 export const SCENARIO_DEFINITIONS = {
     1: {
         diff: 1,
-        time: 20 * 60,
+        time: 25 * 60,
         tasks: [
             { type: 'sql', config: { difficulty: 'easy', query: 'SELECT name FROM system', table: SQLTable_1 }},
             { type: 'negabinary', config: { length: 4 }},
@@ -18,7 +18,7 @@ export const SCENARIO_DEFINITIONS = {
     },
     2: {
         diff: 2,
-        time: 40 * 60,
+        time: 45 * 60,
         tasks: [
             { type: 'hamilton', config: { graphData: {
             "ALPHA":   { "BRAVO": 75, "CHARLIE": 90 },
@@ -35,7 +35,7 @@ export const SCENARIO_DEFINITIONS = {
     },
     3: {
         diff: 3,
-        time: 60 * 60,
+        time: 65 * 60,
         tasks: [
             { type: 'sql', config: { difficulty: 'hard', query: 'SELECT key FROM sys INNER JOIN tem ON sys.id = tem.id WHERE sys.id=12 ', table: SQLTable_3 }},
             { type: 'matrix', config: { size: 3 }},
@@ -55,7 +55,7 @@ export const SCENARIO_DEFINITIONS = {
     },
     4: { //tutorial
         diff: 4,
-        time : 10 * 60,
+        time : 6 * 60,
         tasks: [
             { type: 'hex', config: { mode: 'single-char' }},
             { type: 'final_exec', config: { script: 'shutdown.exe' }}

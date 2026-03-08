@@ -26,7 +26,7 @@ export class SqlTask extends BaseTask {
     _prefixRow(row, tableName) {
         const newRow = {};
         for (const key in row) {
-            newRow[`${tableName}.${key}`] = row[key];   // with prefix (sys.id)
+            newRow[`${tableName.toLowerCase()}.${key.toLowerCase()}`] = row[key];   // with prefix (sys.id)
             //newRow[key] = row[key];                     // without prefix (id)
         }
         return newRow;
@@ -56,7 +56,7 @@ export class SqlTask extends BaseTask {
     }
 
     validate(input) {
-        const cleanInput = input.trim().replace(/;$/, '');
+        const cleanInput = input.trim().replace(/;$/, '').toLowerCase();
         const userResult = this.handleQuery(cleanInput);
 
         if (userResult.startsWith("BŁĄD")) {
@@ -65,7 +65,7 @@ export class SqlTask extends BaseTask {
 
         const targetResult = this.handleQuery(this.targetQuery);
 
-        if (userResult === targetResult) {
+        if (userResult.trim() === targetResult.trim()) {
             this.complete();
             if (this.difficulty === 'easy') {
                 return [true, `Wykonano pomyślnie.\nNazwa użytkownika: ${userResult.split('\n')[2].trim()}`];
@@ -89,13 +89,18 @@ export class SqlTask extends BaseTask {
         const [, column, operator, quote, quotedVal, unquotedVal] = match;
         
         let targetVal = quotedVal !== undefined ? quotedVal : unquotedVal;
-        if (!quote && !isNaN(targetVal)) targetVal = Number(targetVal);
 
         return data.filter(row => {
             let rowVal = row[column];
             if (rowVal === undefined && !column.includes('.')) {
                 const key = Object.keys(row).find(k => k.endsWith('.' + column));
                 if (key) rowVal = row[key];
+            }
+
+            let currentTarget = targetVal;
+            if (!quote && !isNaN(rowVal) && !isNaN(currentTarget)) {
+                rowVal = Number(rowVal);
+                currentTarget = Number(currentTarget);
             }
 
             switch (operator) {
@@ -111,9 +116,9 @@ export class SqlTask extends BaseTask {
     }
 
     handleQuery(query) {
-        const sqlRegex = /SELECT\s+(.+?)\s+FROM\s+([a-zA-Z0-9_]+)(?:\s+INNER JOIN\s+([a-zA-Z0-9_]+)\s+ON\s+(.+?))?(?:\s+WHERE\s+(.+))?$/i;
-        
-        const normalizedQuery = query.replace(/\s+/g, ' ').trim();
+        const sqlRegex = /select\s+(.+?)\s+from\s+([a-z0-9_]+)(?:\s+inner join\s+([a-z0-9_]+)\s+on\s+(.+?))?(?:\s+where\s+(.+))?$/;
+
+        const normalizedQuery = query.replace(/\s+/g, ' ').trim().toLowerCase();
         const match = normalizedQuery.match(sqlRegex);
 
         if (!match) {
@@ -127,13 +132,14 @@ export class SqlTask extends BaseTask {
         }
         
         let workingData = this.db[fromTable].map(row => this._prefixRow(row, fromTable));
+
         // JOIN 
         if (joinTable && joinCondition) {
             if (!this.db[joinTable]) return `BŁĄD: Tabela '${joinTable}' nie istnieje.`;
             
             const rightData = this.db[joinTable].map(row => this._prefixRow(row, joinTable));
             
-            const onMatch = joinCondition.match(/([a-zA-Z0-9_.]+)\s*=\s*([a-zA-Z0-9_.]+)/);
+            const onMatch = joinCondition.match(/([a-z0-9_.]+)\s*=\s*([a-z0-9_.]+)/);
             if (!onMatch) return "BŁĄD: Niepoprawny warunek ON.";
             
             const [ , keyLeft, keyRight ] = onMatch;
@@ -142,9 +148,21 @@ export class SqlTask extends BaseTask {
             
             workingData.forEach(leftRow => {
                 rightData.forEach(rightRow => {
-                    const valA = leftRow[keyLeft] !== undefined ? leftRow[keyLeft] : rightRow[keyLeft];
-                    const valB = rightRow[keyRight] !== undefined ? rightRow[keyRight] : leftRow[keyRight];
-                    if (valA == valB) { 
+                    let valA = leftRow[keyLeft];
+                    if(valA === undefined) {
+                        const fallBackKey = Object.keys(leftRow).find(k => k.endsWith('.' + keyLeft));
+                        if(fallBackKey) valA = leftRow[fallBackKey];
+                    }
+                    if(valA === undefined) valA = rightRow[keyLeft];
+                    
+                    let valB = rightRow[keyRight];
+                     if(valB === undefined) {
+                        const fallBackKey = Object.keys(rightRow).find(k => k.endsWith('.' + keyRight));
+                        if(fallBackKey) valB = rightRow[fallBackKey];
+                    }
+                    if(valB === undefined) valB = leftRow[keyRight];
+
+                    if (valA !== undefined && valB !== undefined && valA == valB) { 
                         joinedData.push({ ...leftRow, ...rightRow });
                     }
                 });

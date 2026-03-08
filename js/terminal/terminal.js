@@ -176,25 +176,20 @@ export function closeImageViewer() {
   }
 }
 
-const textTypes = ['txt', 'ini', 'conf', 'log', 'hex', 'enc', 'pem'];
+const textTypes = ['txt', 'ascii', 'log', 'man'];
 /**
  * Displays provided filedata in terminal
  * @param {string||} fileData 
  */
 export async function handleFileVisualization(fileData){
   const { name, type, content } = fileData;
-  
-  console.log("TERMINAL TYPE: " + type);
   if(textTypes.includes(type)){
 	getTerminalOutput().innerHTML = "";
-	const formattedText = `\n--- POCZĄTEK PLIKU: ${name} ---\n${content}\n--- KONIEC PLIKU ---\n`;
-	console.log("in");
+	const parsedContent = Array.isArray(content) ? content.join('\n') : content;;
+	const formattedText = `\n--- POCZĄTEK PLIKU: ${name} ---\n${parsedContent}\n--- KONIEC PLIKU ---\n`;
 	displayMessage(formattedText);
   }else if (type === 'jpg' || type === 'png') {
     showImageViewer(name);
-  } else if (type === 'dbase') {
-    // todo: baza danych
-	console.log("TERMINAL: DBASE NOT SUPPORTED");
   }
 }
 
@@ -223,7 +218,6 @@ let bricked = false;
 export function processCommand(inputText) {
 	const terminalInput = getTerminalInput();
 	const userCommand = terminalInput.textContent;
-	let response = '';
 	let argument = '';
 
 	if(!bricked) {
@@ -231,7 +225,7 @@ export function processCommand(inputText) {
 		case "help":
 			return userCommand + "\n" + getHelp();
 		case "date":
-			return userCommand + "\n" + new Date().toLocaleString();
+			return userCommand + "\n" + "12 Listopada 1998";
 		case "cd":
 			argument = userCommand.split(" ").slice(1).join(" ").trim();
 			if (!argument) return `Brak argumentu`
@@ -240,7 +234,6 @@ export function processCommand(inputText) {
 		case "open":
 			argument = userCommand.split(" ").slice(1).join(" ").trim();
 			let result = openFile(argument);
-			if (!result.startsWith('BŁĄD')) getTerminalOutput().innerHTML = "";
 			return result;
 		case "close":
 			closeImageViewer();

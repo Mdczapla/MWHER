@@ -21,6 +21,7 @@ import {
 import { getTerminalOutput, getTerminalInput, getInputPrefix } from '../utils/domCache.js';
 import { TaskManager } from '../modules/TaskManager.js';
 import { SCENARIO_DEFINITIONS } from '../config/constants.js';
+import { resolvePath } from '../modules/VirtualFileSystem.js';
 
 
 let commandHistory = [];
@@ -207,23 +208,65 @@ function handleTab() {
  * @returns {string[]} Array of matching commands
  */
 function getAutocompleteSuggestions(inputText) {
-  const availableCommands = [
-    "cd",
-    "open",
-    "close",
-    "task",
-    "shutdown.exe",
-      // Ustawienia i komendy systemowe (Utility)
-    "help",
-    "clear",
-    "date",
-    "theme green",
-    "theme orange",
-    "tutorial"
-  ];
+  if (!inputText) return [];
 
-  return availableCommands.filter((command) => {
-    return command.startsWith(inputText.toLowerCase());
-  });
+  const input = inputText.toLowerCase();
+  const parts = input.trim().split(/\s+/);
+  const command = parts[0];
+  const argument = parts.length > 1 ? parts[1] : "";
+
+  if (parts.length === 1 && !inputText.endsWith(" ")) {
+    const availableCommands = ["cd", "open", "close", "task", "help", "clear", "tutorial"];
+    return availableCommands.filter(cmd => cmd.startsWith(command));
+  }
+
+  if (command === "cd" || command === "open") {
+    const lastSlashIndex = argument.lastIndexOf('/');
+    const basePath = lastSlashIndex !== -1 ? argument.substring(0, lastSlashIndex + 1) : "";
+    const fragment = lastSlashIndex !== -1 ? argument.substring(lastSlashIndex + 1) : argument;
+
+    let searchNode = resolvePath();
+    
+    if (basePath) {
+        const targetNode = getNodeByPathRelative(basePath); 
+        if (!targetNode || targetNode.type !== 'dir') return [];
+        searchNode = targetNode;
+    }
+
+    if (!searchNode || !searchNode.children) return [];
+
+    const entries = Object.keys(searchNode.children);
+    
+    return entries
+      .filter(name => {
+        const child = searchNode.children[name];
+        const isMatch = name.toLowerCase().startsWith(fragment.toLowerCase());
+        const isVisible = !child.hidden;
+        if (command === "cd") return child.type === 'dir' && isMatch && isVisible;
+        if (command === "open") return child.type !== 'dir' && isMatch && isVisible;
+        return isMatch && isVisible;
+      })
+      .map(name => `${command} ${basePath}${name}`);
+  }
+
+  return [];
 }
 
+/**
+ * Helper function for autocomplete
+ */
+function getNodeByPathRelative(path) {
+    const parts = path.split('/').filter(p => p && p !== '.');
+    let currentNode = path.startsWith('/') ? fileTree : resolvePath();
+    for (const part of parts) {
+        if (part === '..') {
+            continue;
+        }
+        if (currentNode.children && currentNode.children[part]) {
+            currentNode = currentNode.children[part];
+        } else {
+            return null;
+        }
+    }
+    return currentNode;
+}
