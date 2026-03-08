@@ -1,18 +1,23 @@
-
 .image-viewer-window {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 30%; 
-  background-color: #050505;
+  bottom: 5vh; 
+  right: 5vw; 
+  width: fit-content;
+  max-width: 90vw;
+  background-color: #000000;
   border: 1px solid currentColor;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
   z-index: 1000;
   display: flex;
   flex-direction: column;
   color: inherit; 
+  animation: crt-turn-on 0.4s ease-out forwards;
+  transform-origin: center center;
 }
 
+.image-viewer-window.closing {
+    animation: crt-turn-off 0.3s ease-out forwards;
+}
 
 .viewer-header {
   display: flex;
@@ -22,9 +27,9 @@
   border-bottom: 1px solid currentColor;
   font-family: monospace;
   font-size: 14px;
-  background-color: rgba(255, 255, 255, 0.05); 
+  background-color: rgba(255, 255, 255, 0.911); 
+  color: #000; 
 }
-
 
 .viewer-close {
   cursor: pointer;
@@ -36,18 +41,20 @@
   text-shadow: 0 0 5px white;
 }
 
-
 .viewer-content {
   padding: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: radial-gradient(circle, transparent 20%, #000 120%);
+  overflow: hidden;
+  position: relative;
 }
 
 .viewer-content img {
-  max-width: 100%;
+  display: block;
+  width: auto;
   height: auto;
-  filter: contrast(1.1) brightness(0.9) sepia(0.2) hue-rotate(180deg); 
-  border: 1px dashed rgba(255, 255, 255, 0.2);
+  max-width: 100%;  
+  max-height: calc(90vh - 45px); 
 }

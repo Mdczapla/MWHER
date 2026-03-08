@@ -18,7 +18,7 @@ export class HamiltonTask extends BaseTask {
         let instruction = [
             "[PROTOKÓŁ SIECIOWY: ROUTING_TSP]\n",
             "WYKRYTO WĘZŁY: \n" + Object.keys(this.graph).join(", "),
-            "Musisz wyznaczyć trasę najszybszą (najmniejszy całkowity PING), odwiedzając każdy węzeł dokładnie raz.\n",
+            "\nMusisz wyznaczyć trasę najszybszą (najmniejszy całkowity PING), odwiedzając każdy węzeł dokładnie raz.\n",
             "PUNKT STARTOWY: " + this.startNode + "\n",
             "Mapę węzłów szukaj w ukrytych plikach...\n",
             "Podaj trasę w formacie: ALPHA-BRAVO-CHARLIE-DELTA\n"

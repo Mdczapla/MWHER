@@ -15,63 +15,114 @@ import {
 	processTaskInput
 } from "../handlers/inputHandler.js";
 import { scrollToBottom } from '../handlers/utils.js';
-import { getTerminalOutput, getTerminalInput, getInputPrefix } from '../utils/domCache.js';
+import { getTerminalOutput, getTerminalInput, getInputPrefix, getTerminalWrapper } from '../utils/domCache.js';
 import { ANIMATION } from '../config/constants.js';
 import { changeDirectory, openFile, closeFile, getTreeStructure } from "../modules/VirtualFileSystem.js";
-import { playNarrator } from "../audio/audioManager.js";
+import { getCurrentAsciiState, getCurrentTime } from "../utils/leftHelper.js";
 
+const channel = new BroadcastChannel('mher_sync');
 /**
  * Display intro on terminal initialization
  */
 export async function showIntroMessage() {
-	displayMessage(getIntro());
+	await displayMessage(getIntro());
 }
 
 /**
  * Display tutorial on terminal initialization
  */
 export async function showTutorialMessage() {
-	displayMessage(getTutorial());
+	await displayMessage(getTutorial());
 }
 /**
  * Display welcome banner on terminal
  */
 export async function showWelcomeMessage() {
-	displayMessage(getBanner());
+	await displayMessage(getBanner());
 }
 /**
- * Display Directory Structure in right.html
+ * Display immediately Directory Structure in right.html
  */
-export async function showCurrentDirectory(){
-	displayMessage(getTreeStructure());
+export function showCurrentDirectory(){
+	const terminalOutput = getTerminalOutput();
+	terminalOutput.innerText = getTreeStructure();
 }
 
+/**
+ * Display Current Servers Mapping in left.html
+ */
+export async function showServersMap(){
+	getTerminalOutput().innerHTML = '';
+	await displayMessage(getCurrentAsciiState());
+}
 /**
  * Display ASCII Task Chain in left.html
  */
 
 export async function showASCIITasks(asciiString){
-	displayMessage(asciiString);
+	await displayMessage(asciiString);
 }
 /**
  * Timer run out
  */
 export async function gameover(){
 	bricked = true;
+
 	applyTheme("red");
 	getTerminalOutput().innerHTML = "";
-	displayMessage(getGameover());
+
+	await displayMessage(getGameover(), 0.5);
+
+    const terminalWrapper = getTerminalWrapper();
+    terminalWrapper.classList.add('critical-failure');
+
+    setTimeout(() => {
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'fatal-error-text';
+        errorMsg.innerHTML = "KRYTYCZNE NARUSZENIE BEZPIECZEŃSTWA<br><br>SYSTEM ZABLOKOWANY";
+        document.body.appendChild(errorMsg);
+    }, 5000);
+
+}
+
+/**
+ * Victory
+ */
+export async function executeShutdown() {
+    const shutdownLogs = [
+		"ZAMYKANIE WSZYSTKICH PROCESÓW...\n",
+		"ROZŁĄCZANIE Z UPLINKIEM...\n",
+		"ZAPISYWANIE STANU SESJI... NIEPOWODZENIE.\n",
+		"CZYSZCZENIE PAMIĘCI OPERACYJNEJ...\n",
+		"ZAMYKANIE JĄDRA SYSTEMU...\n",
+		"Żegnaj."
+	];
+
+    await displayMessage(shutdownLogs);
+}
+
+export function endSession(){
+	getTerminalWrapper().classList.add("terminal-shutdown");
+    setTimeout(() => {
+        document.body.style.backgroundColor = "black";
+		document.body.style.color = "#00FF41";
+		document.body.innerHTML = `
+            <div class="flicker-text" style="font-size: 2.5rem; letter-spacing: 2px;">
+                CZAS: ${getCurrentTime()}
+            </div>
+        `;
+    }, 1000);
 }
 
 /**
  * Displays provided message in terminal
  * @param {array of string||string} outputMessage 
  */
-async function displayMessage(outputMessage){
+async function displayMessage(outputMessage, speedOverwrite = 0){
 	const terminalOutput = getTerminalOutput();
 	const newOutputLine = document.createElement("div");
 	terminalOutput.appendChild(newOutputLine);
-	await animateText(newOutputLine, outputMessage);
+	await animateText(newOutputLine, outputMessage, speedOverwrite);
 	scrollToBottom();
 }
 
@@ -95,6 +146,7 @@ function showImageViewer(imageName){
       <span class="viewer-close" id="close-viewer-btn">[X]</span>
     </div>
     <div class="viewer-content">
+	   <div class="scanline"></div>
        <img src="./assets/images/${imageName}" alt="Podgląd pliku: ${imageName}" />
     </div>
   	`;
@@ -113,8 +165,14 @@ function showImageViewer(imageName){
  */
 export function closeImageViewer() {
   if (currentImageViewer) {
-    currentImageViewer.remove();
-    currentImageViewer = null;
+	currentImageViewer.classList.add('closing');
+	setTimeout(() => {
+		if(currentImageViewer){
+			currentImageViewer.remove();
+    		currentImageViewer = null;
+		}
+	}, 300);
+    
   }
 }
 
@@ -194,8 +252,13 @@ export function processCommand(inputText) {
 			return userCommand + "\n" + processTaskInput("shutdown.exe");
 		case "theme":
 			argument = userCommand.split(" ").slice(1).join(" ").trim();
-			if(argument === 'green' || argument === 'orange'){
-				applyTheme(argument);
+			if(argument === 'orange' || argument === 'green'){
+				channel.postMessage({
+					type: 'CHANGE_THEME',
+					payload: {
+						theme: argument
+					}
+				})
 				return userCommand + "\n" + `Wygląd zmieniony na ${argument}.`;
 			}
 			return "Niewspierany wygląd"
@@ -256,18 +319,20 @@ let doonce = true;
  * @param {HTMLElement} terminalInput - Optional input element to disable during animation
  * @param {HTMLElement} inputPrefix - Optional prefix element to hide during animation
  */
-export async function animateText(element, text, delay = ANIMATION.DELAY_DEFAULT, terminalInput, inputPrefix) {
+
+let speedFactor = 1;
+
+export async function animateText(element, text, speedOverwrite = 0, delay = ANIMATION.DELAY_DEFAULT, terminalInput, inputPrefix) {
 	if (terminalInput) {
 		terminalInput.contentEditable = "false";
 		if (inputPrefix) inputPrefix.style.display = "none";
 	}
-	let speedFactor = 1;
-	if(doonce) {
-		speedFactor = 0.5;
-		doonce = false;
-	}
-	else speedFactor = getSpeedMultiplier(text.length);
 
+	if(speedOverwrite){
+		speedFactor = speedOverwrite;
+	}else {
+		speedFactor = getSpeedMultiplier(text.length);
+	}
 	 
 	const adjustedDelay = delay / speedFactor;
 

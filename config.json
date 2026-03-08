@@ -2,7 +2,7 @@
   "terminal": {
     "title": "RETRO TERMINAL",
     "prompt": "$ / >",
-    "defaultTheme": "green"
+    "defaultTheme": "Orange"
   },
   "content": {
     "intro": [
@@ -61,6 +61,10 @@
     "   ",
     "   > help",
     "   Wyświetla pełną listę dostępnych komend i programów.",
+    "   ",
+    "   Aby poruszać się po strukturze plików, używaj komendy cd:",
+    "   > cd <nazwa_katalogu>  - Wejście do wskazanego folderu.",
+    "   > cd ..                - Powrót do folderu nadrzędnego.",
     "   ",
     "   Układ Ekranów Pobocznych:",
     "   * Prawy Ekran: Wyświetla listę dostępnych plików. Aby przeczytać",
@@ -161,6 +165,6 @@
     "defaultFontSize": 16,
     "defaultFontFamily": "Courier New",
     "availableFonts": ["Courier New", "Consolas", "Roboto Mono", "Fira Code"],
-    "themes": ["green", "orange"]
+    "themes": ["orange", "green"]
   }
 }

@@ -1,4 +1,4 @@
-1. zmienic i przeredagowac left.js oraz left.html
+-left.js
 
 np.
 kwadrat <- kwadrat
@@ -6,7 +6,14 @@ kwadrat <- kwadrat
 		|
 kwadrat -> kwadrat
 
-dodać dźwięki, narratora do intra
+
+-dodać dźwięki, po poprawnym lub niepoprawnym zadaniu efekt dźwiękowy
+
+
+-zadania to hasła do serwera, trzeba go odblokować, aby przejść dalej
+
+
+
 
 Zadania
 
@@ -37,6 +44,19 @@ ZROBIĆ OBRAZKI: !!!!!!!!!!!!!!!!
 
  **`topo_active.jpg`** * **Do zadania:** `hamilton` done!
 * **Co powinno być na obrazku:** Grafika przedstawiająca mapę topologii serwerów – połączone ze sobą węzły sieciowe (np. kropki lub ikony serwerów z nazwami takimi jak ALPHA, BETA itp. oraz ścieżkami między nimi). Graf ten musi skrywać w sobie poprawny cykl Hamiltona (możliwość przejścia przez każdy węzeł dokładnie raz).
+
+
+checklista:
+
+Np. jakieś animacje.
+
+Większy obrazek, zalecam zamienić go na np. 8 kolorów.
+
+
+DODAC ANIMACJE VICTORY
+
+
+
 
 
 

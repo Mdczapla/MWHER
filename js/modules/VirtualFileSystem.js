@@ -7,17 +7,17 @@ const { ascii, parity, hex, negabinary, xor } = HINT_CONTENT;
 const fileTree = {
   type: 'dir', name: 'root',
   children: {
-    'bin': { 
-      type: 'dir', name: 'bin', locked: false,
+    'bin': {
+      type: 'dir', name: 'bin', locked: true,
       children: {
         'shutdown.exe': { type: 'exe', name: 'shutdown.exe', locked: true }
       }
     },
-    'etc': { 
+    'etc': {
       type: 'dir', name: 'etc', locked: true,
       children: {
         'init.d': {
-          type: 'dir', name: 'init.d', locked: false,
+          type: 'dir', name: 'init.d', locked: true,
           children: {
             'arch_neg.ini': { type: 'txt', name: 'arch_neg.ini', content: "" }
           }
@@ -35,19 +35,19 @@ const fileTree = {
       type: 'dir', name: 'var', locked: true,
       children: {
         'lib': {
-          type: 'dir', name: 'lib', locked: false,
+          type: 'dir', name: 'lib', locked: true,
           children: {
             'p_vault.dbase': { type: 'txt', name: 'p_vault.dbase', content: "" }
           }
         },
         'crash': {
-          type: 'dir', name: 'crash', locked: false,
+          type: 'dir', name: 'crash', locked: true,
           children: {
             'dump_0x4a.hex': { type: 'txt', name: 'dump_0x4a.hex', content: "" }
           }
         },
         'log': {
-          type: 'dir', name: 'log', locked: false,
+          type: 'dir', name: 'log', locked: true,
           children: {
             'err_parity.log': { type: 'txt', name: 'err_parity.log', content: "" }
           }
@@ -86,13 +86,13 @@ const fileTree = {
       type: 'dir', name: 'net', locked: true,
       children: {
         'conf': {
-          type: 'dir', name: 'conf', locked: false,
+          type: 'dir', name: 'conf', locked: true,
           children: {
             'route_v4.conf': { type: 'txt', name: 'route_v4.conf', content: "" }
           }
         },
         'maps': {
-          type: 'dir', name: 'maps', locked: false,
+          type: 'dir', name: 'maps', locked: true,
           children: {
             'topo_active_v4.jpg': { type: 'jpg', name: 'topo_active_v4.jpg', hidden: true },
             'topo_active_v6.jpg': { type: 'jpg', name: 'topo_active_v6.jpg', hidden: true }
@@ -229,7 +229,7 @@ export function openFile(target) {
   if (textTypes.includes(targetNode.type)) {
     return `[SYSTEM]: Odczytywanie pliku: ${targetNode.name}...`;
   } else if (targetNode.type === 'jpg') {
-    return `[SYSTEM]: Inicjalizacja podglądu obrazu: ${targetNode.name}... (Wpisz 'exit', aby zamknąć)`;
+    return `[SYSTEM]: Inicjalizacja podglądu obrazu: ${targetNode.name}... (Wpisz 'close', aby zamknąć)`;
   } else if (targetNode.type === 'exe') {
     return `[SYSTEM]: Uruchamianie procedury wykonywalnej...`;
   }
@@ -309,13 +309,21 @@ channel.onmessage = (event) => {
       const taskData = TASK_HINTS_DATABASE[currentDiff][taskName];
       
       if (taskData && taskData.fileToUnlock) {
-        const nodeToUnlock = getNodeByPath(taskData.fileToUnlock);
-        if (nodeToUnlock) {
-          nodeToUnlock.locked = false;
-          console.log(`[VFS] Odblokowano zasób: /${taskData.fileToUnlock} (Zadanie: ${taskName})`);
-        } else {
-          console.warn(`[VFS] BŁĄD ODBLOKOWANIA: Nie znaleziono /${taskData.fileToUnlock}`);
-        }
+        const pathParts = taskData.fileToUnlock.split('/')
+        let currentPath = '';
+        
+        pathParts.forEach((part, index) => {
+          currentPath = currentPath === '' ? part : `${currentPath}/${part}`;
+          const nodeToUnlock = getNodeByPath(currentPath);
+
+          if (nodeToUnlock) {
+            nodeToUnlock.locked = false;
+            console.log(`[VFS] Odblokowano zasób: /${taskData.fileToUnlock} (Zadanie: ${taskName})`);
+          } else {
+            console.warn(`[VFS] BŁĄD ODBLOKOWANIA: Nie znaleziono /${taskData.fileToUnlock}`);
+          }
+        })
+
       }
       break;
     case 'COMMAND_CD':
@@ -362,5 +370,5 @@ export function getTreeStructure() {
 }
 
 traverse(fileTree);
-return result;
+return result.join('');
 }

@@ -30,4 +30,6 @@ All personal content, tasks, and system parameters are configured in `config.jso
 
 * **Retro Terminal (Base Engine):** [https://github.com/ogulkokan/retro-terminal](https://github.com/ogulkokan/retro-terminal)
 * **Voice Synthesis:** Narration audio generated using [ElevenLabs](https://elevenlabs.io/)
-* **Sound Effects:** Game Over audio inspired by [Metal Gear Solid - Game Over](https://www.youtube.com/watch?v=PbmkzEgYfWI)
+* **Sound Effects:** 
+Game Over audio inspired by [Metal Gear Solid - Game Over](https://www.youtube.com/watch?v=PbmkzEgYfWI)
+Victory audio inspired by [Metal Gear Solid - Mission Complete](https://www.youtube.com/watch?v=3KtQudl1ayQ)

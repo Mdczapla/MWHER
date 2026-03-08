@@ -126,10 +126,21 @@ export class TaskManager {
         const isCorrect = task.validate(input);
 
         if (isCorrect[0]) {  
+            this.channel.postMessage({
+                type: 'TASK_COMPLETED',
+                payload: {
+                    name: task.name,
+                }
+            });
+
             console.log(`Odpowiedź: ${input}} Poprawna. Przechodzę do następnego zadania.`);
             console.log(this.startNextTask());
             return isCorrect[1];
         }
+
+        this.channel.postMessage({
+            type: 'TASK_FAILED'
+        })
         console.log(`Odpowiedź: ${input}} Niepoprawna.`);
         return isCorrect[1];
     }

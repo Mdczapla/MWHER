@@ -19,6 +19,7 @@ export function initDOMCache() {
     terminalInput: document.getElementById(DOM_IDS.TERMINAL_INPUT),
     terminalOutput: document.getElementById(DOM_IDS.TERMINAL_OUTPUT),
     inputPrefix: document.getElementById(DOM_IDS.INPUT_PREFIX),
+    terminalWrapper: document.querySelector('.terminal-wrapper'),
     terminal: document.querySelector('.terminal')
   };
   return cache;
@@ -79,6 +80,14 @@ export function getInputPrefix() {
  */
 export function getTerminal() {
   return cache.terminal || document.querySelector('.terminal');
+}
+
+/**
+ * Get the terminal wrapper element
+ * @returns {HTMLElement|null}
+ */
+export function getTerminalWrapper() {
+  return cache.terminalWrapper || document.querySelector('.terminal-wrapper');
 }
 
 /**

@@ -17,8 +17,10 @@ export class FinalTask extends BaseTask {
     validate(input) {
         if (input.trim() === this.scriptName) {
             this.complete();
-            this.channel.postMessage({ type: 'VICTORY' });
-            return [true, "[SUKCES]: INICJALIZACJA SHUTDOWN.EXE...\nRDZEŃ SYSTEMU ZABLOKOWANY. BROŃ ZNEUTRALIZOWANA\n*** OPERACJA ZAKOŃCZONA SUKCESEM ***\n"];
+            this.channel.postMessage({ 
+                type: 'VICTORY'
+            });
+            return [true, "Sukces"];
         }
         return [false, "Nieprawidłowe polecenie. Spróbuj ponownie."];
     }

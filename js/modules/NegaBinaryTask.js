@@ -25,7 +25,7 @@ export class NegaBinaryTask extends BaseTask {
             "[SYSTEM NEGABINARNY]\n",
             `Otrzymałeś ciąg negabinarnego kodu: ${this.binaryString}\n`,
             "Twoim zadaniem jest przeliczenie tego ciągu na wartość dziesiętną.\n",
-            "Pamiętaj, że w systemie negabinarnym, bity mają wartości: 1, -2, 4, -8, 16, -32, itd.\n"
+            "Pamiętaj, że w systemie znajdują się ukrytę podręczniki\n"
         ];
         
         return instruction;

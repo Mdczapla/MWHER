@@ -39,7 +39,7 @@ export class MatrixTask extends BaseTask {
             "[MACIERZ]\n",
             `Otrzymałeś macierz ${this.size}x${this.size}:\n`,
             this.matrix.map(row => row.join(' ')).join('\n'),
-            "Twoim zadaniem jest obliczenie wyznacznika tej macierzy.\n"
+            "\nTwoim zadaniem jest obliczenie wyznacznika tej macierzy.\n"
         ];
 
         return instruction;

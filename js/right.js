@@ -5,7 +5,7 @@
 
 import { init } from './init.js';
 import { initCursor } from './terminal/cursor.js';
-import { showCurrentDirectory, handleFileVisualization, closeImageViewer } from './terminal/terminal.js'
+import { showCurrentDirectory, handleFileVisualization, closeImageViewer, gameover, endSession } from './terminal/terminal.js'
 import { theme, fullscreen } from './handlers/globalHandlers.js';
 import { initAudio } from './audio/audioManager.js';
 import { loadConfig } from './config/configLoader.js';
@@ -38,24 +38,26 @@ channel.onmessage = (event) => {
         showCurrentDirectory();
       }, 100);
       break;
-      
     case 'OPEN_FILE':
       handleFileVisualization(payload);
       break;
-      
     case 'CLOSE_FILE':
       document.getElementById('terminal-output').innerHTML = "";
       showCurrentDirectory();
       closeImageViewer();
-      break;
-      
+      break;   
     case 'GAME_OVER':
-      playGameOver();
       gameover();
       break;
+    case 'CHANGE_THEME':
+      applyTheme(payload.theme);
+      break; 
+    case 'SHUTDOWN':
+      endSession();
+      break;
   }
-
 };
+
 // Define some stuff on the window so we can use it directly from the HTML
 Object.assign(window, {
   theme,

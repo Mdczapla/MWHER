@@ -1,22 +1,53 @@
-import { playNarrator } from '../audio/audioManager.js';
+import { playBootSound, playNarrator, stopBootSound } from '../audio/audioManager.js';
 import { showIntroMessage } from '../terminal/terminal.js';
+import { runHexBootSequence } from '../utils/animations.js';
+import { getTerminalOutput } from '../utils/domCache.js';
 import { scrollToBottom } from './utils.js';
 
 let isGameStarted = false;
-
-export function handleClick(event) {
+let isBooting;
+export async function handleClick(event) {
   // Prevent default to completely disable mouse caret placement
   // Old terminals only allow keyboard navigation
-  if (!isGameStarted) {
-    playNarrator();
-    showIntroMessage();
-    isGameStarted = true;
-  }
 
   if (event) {
     event.preventDefault();
     event.stopPropagation();
   }
+
+  if (!isGameStarted && !isBooting) {
+    isBooting = true;
+
+    const terminalOutput = getTerminalOutput();
+    if (terminalOutput) {
+      playBootSound();
+      runHexBootSequence(terminalOutput)
+        .then(() => {
+          stopBootSound();
+          return new Promise(resolve => setTimeout(resolve, 1000));
+        })
+        .then(() => {
+          stopBootSound();
+          playNarrator();
+          showIntroMessage();
+          isGameStarted = true;
+        })
+        .catch((error) => {
+          console.error("[MHER OS] Błąd sekwencji startowej:", error);
+          stopBootSound();
+          playNarrator();
+          showIntroMessage();
+          isGameStarted = true;
+        })
+        .finally(() => {
+          isBooting = false;
+        });
+    } else {
+      isBooting = false;
+    }
+  }
+
+  if (isBooting) return;
 
   const input = document.getElementById("terminal-input");
   if (!input) return;

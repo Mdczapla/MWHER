@@ -8,6 +8,13 @@ import { AUDIO } from '../config/constants.js';
 
 const SOUND_TYPING = 'assets/sounds/single-key-stroke.mp3';
 const SOUND_GAMEOVER = 'assets/sounds/gameover.mp3';
+const SOUND_GLITCH = 'assets/sounds/glitch.mp3';
+const SOUND_SUCCESS = 'assets/sounds/success.mp3';
+const SOUND_RADAR = 'assets/sounds/radar.mp3';
+const SOUND_BOOT = 'assets/sounds/boot.mp3';
+const SOUND_POWERDOWN = 'assets/sounds/powerdown.mp3';
+const SOUND_VICTORY = 'assets/sounds/victory.mp3';
+
 const SOUND_PART1 = 'assets/sounds/narrator/first.mp3';
 const SOUND_PART2 = 'assets/sounds/narrator/second.mp3';
 const SOUND_PART3 = 'assets/sounds/narrator/third.mp3';
@@ -19,6 +26,13 @@ let soundEnabled = true;
 let volume = AUDIO.DEFAULT_VOLUME;
 
 let gameOverAudio = null;
+let glitchAudio = null;
+let successAudio = null;
+let radarAudio = null;
+let bootAudio = null;
+let powerDownAudio = null;
+let victoryAudio = null;
+
 let narratorQueue = [];
 let currentNarrationIndex = 0;
 let isNarrationActive = false;
@@ -54,7 +68,15 @@ function ensurePool() {
  */
 function initSpecialSounds() {
   gameOverAudio = createAudioInstance(SOUND_GAMEOVER);
-  
+  glitchAudio = createAudioInstance(SOUND_GLITCH);
+  successAudio = createAudioInstance(SOUND_SUCCESS);
+  radarAudio = createAudioInstance(SOUND_RADAR);
+  radarAudio.loop = true;
+  bootAudio = createAudioInstance(SOUND_BOOT);
+  bootAudio.loop = true;
+  victoryAudio = createAudioInstance(SOUND_VICTORY);
+  powerDownAudio = createAudioInstance(SOUND_POWERDOWN);
+
   narratorQueue = [
     createAudioInstance(SOUND_PART1),
     createAudioInstance(SOUND_PART2),
@@ -81,6 +103,14 @@ export function initAudio() {
     getSoundSettings,
     playTypingSound,
     playGameOver,
+    playGlitchSound,
+    playSuccessSound,
+    playRadarSound,
+    stopRadarSound,
+    playBootSound,
+    stopBootSound,
+    playPowerDownSound,
+    playVictorySound,
     playNarrator,
     stopNarrator
   };
@@ -95,6 +125,8 @@ export function setSoundEnabled(enabled) {
   if (!enabled) {
     stopNarrator();
     if (gameOverAudio) gameOverAudio.pause();
+    if (bootAudio) bootAudio.pause();
+    if (powerDownAudio) powerDownAudio.pause();
   }
 }
 
@@ -108,9 +140,15 @@ export function setVolume(newVolume) {
   // typing pool
   audioPool.forEach(audio => { audio.volume = volume; });
   
-  // game over sound
+  // sound effects
   if (gameOverAudio) gameOverAudio.volume = volume;
-  
+  if (glitchAudio) glitchAudio.volume = volume;
+  if (successAudio) successAudio.volume = volume;
+  if (radarAudio) radarAudio.volume = volume;
+  if (bootAudio) bootAudio.volume = volume;
+  if (powerDownAudio) powerDownAudio.volume = volume;
+  if (victoryAudio) victoryAudio.volume = volume;
+
   // narrator parts
   narratorQueue.forEach(audio => { audio.volume = volume; });
 }
@@ -158,9 +196,9 @@ export function stopNarrator() {
   }
 }
 
-/**
- * Play the Game Over sequence
- */
+
+// ================Play Sound Effects================
+
 export function playGameOver() {
   if (!soundEnabled || !gameOverAudio) return;
 
@@ -169,6 +207,71 @@ export function playGameOver() {
     gameOverAudio.play().catch(e => console.warn('Game Over audio blocked:', e));
   } catch (error) {
     console.warn('Game Over playback error:', error);
+  }
+}
+
+export function playGlitchSound() {
+  if (!soundEnabled || !glitchAudio) return;
+  try {
+    glitchAudio.currentTime = 0;
+    glitchAudio.play().catch(() => {});
+  } catch (error) {}
+}
+
+export function playSuccessSound() {
+  if (!soundEnabled || !successAudio) return;
+  try {
+    successAudio.currentTime = 0;
+    successAudio.play().catch(() => {});
+  } catch (error) {}
+}
+
+export function playRadarSound() {
+  if (!soundEnabled || !radarAudio) return;
+  try {
+    radarAudio.currentTime = 0;
+    radarAudio.play().catch(() => {});
+  } catch (error) {}
+}
+
+export function stopRadarSound() {
+  if (radarAudio) {
+    radarAudio.pause();
+    radarAudio.currentTime = 0;
+  }
+}
+
+export function playBootSound() {
+  if (!soundEnabled || !bootAudio) return;
+  try {
+    bootAudio.currentTime = 0;
+    bootAudio.play().catch(() => {});
+  } catch (error) {}
+}
+
+export function stopBootSound() {
+  if (bootAudio) {
+    bootAudio.pause();
+    bootAudio.currentTime = 0;
+  }
+}
+
+export function playPowerDownSound() {
+  if (!soundEnabled || !powerDownAudio) return;
+  try {
+    powerDownAudio.currentTime = 0;
+    powerDownAudio.play().catch(() => {});
+  } catch (error) {}
+}
+
+export function playVictorySound() {
+  if (!soundEnabled || !victoryAudio) return null;
+  try {
+    victoryAudio.currentTime = 0;
+    victoryAudio.play().catch(() => {});
+    return victoryAudio;
+  } catch (error) {
+    return null;
   }
 }
 
@@ -183,7 +286,7 @@ export function playNarrator() {
   currentNarrationIndex = 0;
   setTimeout(() => {
     playNextNarratorPart();
-  }, 10000);
+  }, 2000);
 }
 
 /**

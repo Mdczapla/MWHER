@@ -76,7 +76,7 @@ export class SqlTask extends BaseTask {
             }
             
         } else {
-            return [false, `[SQL FAILURE] Wynik niepoprawny lub pusty.\nTwój wynik:\n${userResult}`];
+            return [false, `Twój wynik:\n${userResult}`];
         }
     }
 

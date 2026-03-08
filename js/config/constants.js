@@ -70,12 +70,12 @@ export const TASK_HINTS_DATABASE = {
     // =========================================================
     1: {
         'sql': {
-            fileToUnlock: 'var', 
+            fileToUnlock: 'var/lib', 
             targetFile: 'var/lib/p_vault.dbase',
             content: "[LOG: 12.04] Jeśli to czytasz, to znaczy, że zablokowano mi dostęp. Zostawiłem ci furtkę w systemie plików.\nWejdź do bazy i wydobądź ukryte dane, abyś mógł ruszyć dalej.\nZostawiłem stary szkic schematu w /usr/share/docs/rel_schema.jpg. Pospiesz się."
         },
         'negabinary': {
-            fileToUnlock: 'etc', 
+            fileToUnlock: 'etc/init.d', 
             targetFile: 'etc/init.d/arch_neg.ini',
             content: "[LOG: URZĄDZENIE ZASILAJĄCE] Przełączyłem zasilanie na stary bezpiecznik NegaBinary (baza -2), aby zmylić algorytmy tropiące.\nMusisz przeliczyć odczyt z rejestru na normalny system dziesiętny. Notatki schowałem tutaj: /usr/share/docs/base_m2.man"
         },
@@ -96,12 +96,12 @@ export const TASK_HINTS_DATABASE = {
     // =========================================================
     2: {
         'hamilton': {
-            fileToUnlock: 'net',
+            fileToUnlock: 'net/conf',
             targetFile: 'net/conf/route_v4.conf',
             content: "[OSTRZEŻENIE] System cię namierza. Zablokowałem routing, musisz wytyczyć ścieżkę Hamiltona ręcznie.\nOtwórz starą mapę topologii: /net/maps/topo_active_v4.jpg.\nZnajdź drogę przez wszystkie węzły, przechodząc przez każdy dokładnie jeden raz. Liczę na ciebie."
         },
         'sql': {
-            fileToUnlock: 'var',
+            fileToUnlock: 'var/lib',
             targetFile: 'var/lib/p_vault.dbase',
             content: "[DANE KRYTYCZNE] Potrzebujesz tego konkretnego wpisu. Zszedłem głębiej do bazy.\nMusisz skonstruować odpowiednią kwerendę, by to wyciągnąć. \nPamiętam jedynie, że uwielbiałem z nim grać w golfa... \nSprawdź schemat w /usr/share/docs/rel_schema.jpg. Nie pomyl się."
         },
@@ -111,12 +111,12 @@ export const TASK_HINTS_DATABASE = {
             content: "[LOG KRYTYCZNY] Logi uległy uszkodzeniu podczas próby wyśledzenia mojego sygnału. Został tylko strzęp danych.\nBrakuje ostatniego bitu parzystości. Sprawdź manual (/usr/share/docs/err_corr.man) i zrekonstruuj ten sektor. Musisz dowiedzieć się, co tam ukryto."
         },
         'negabinary': {
-            fileToUnlock: 'etc',
+            fileToUnlock: 'etc/init.d',
             targetFile: 'etc/init.d/arch_neg.ini',
             content: "[ZASILANIE GŁÓWNE] Moduł zasilania jest chroniony przez zaawansowaną blokadę NegaBinary.\nMusisz przeliczyć ten ciąg na system dziesiętny, aby odzyskać kontrolę. W razie problemów otwórz plik /usr/share/docs/base_m2.man."
         },
         'matrix': {
-            fileToUnlock: 'etc', 
+            fileToUnlock: 'etc/ssl', 
             targetFile: 'etc/ssl/m_cert.pem',
             content: "[KRYPTOGRAFIA] Aktywowano blokadę przestrzenną. To szyfr macierzowy.\nMusisz to rozwiązać i podać wyznacznik.\nWzór znajduje się pod /usr/share/docs/spatial_det.jpg. Nie zawiedź mnie."
         },
@@ -132,22 +132,22 @@ export const TASK_HINTS_DATABASE = {
     // =========================================================
     3: {
         'sql': {
-            fileToUnlock: 'var',
+            fileToUnlock: 'var/lib',
             targetFile: 'var/lib/p_vault.dbase',
             content: "[OSTATNI BASTION] Jeśli tu dotarłeś, to znaczy, że system nie zdążył mnie powstrzymać.\nMusisz połączyć odpowiednie tabele, aby wyciągnąć klucz. Użyj schematu /usr/share/docs/rel_schema.jpg. \n ~~Oskar"
         },
         'matrix': {
-            fileToUnlock: 'etc',
+            fileToUnlock: 'etc/ssl',
             targetFile: 'etc/ssl/m_cert.pem',
             content: "[KRYPTOGRAFIA] Krytyczny poziom przestrzenny.\nMusisz obliczyć wyznacznik zaawansowanej macierzy. Wzór znajdziesz w /usr/share/docs/spatial_det.jpg.\nTo jest właściwy klucz."
         },
         'hamilton': {
-            fileToUnlock: 'net',
+            fileToUnlock: 'net/conf',
             targetFile: 'net/conf/route_v4.conf',
             content: "[ODCIĘCIE SIECI] Protokół bezpieczeństwa wygenerował pełno ślepych zaułków w /net/maps/topo_active_v6.jpg.\nWyznacz pełny i najszybszy cykl Hamiltona w sieci. Uważaj na fałszywe ścieżki. Na pewno potrafisz to dostrzec."
         },
         'negabinary': {
-            fileToUnlock: 'etc', 
+            fileToUnlock: 'etc/init.d', 
             targetFile: 'etc/init.d/arch_neg.ini',
             content: "[RDZEŃ ZASILANIA] Wszystko albo nic. Główny klucz zasilania został ukryty w kodzie NegaBinary.\nMusisz go przeliczyć na system dziesiętny. Dasz radę. Szukaj wskazówek w /usr/share/docs/base_m2.man."
         },
@@ -157,7 +157,7 @@ export const TASK_HINTS_DATABASE = {
             content: "[KRYTYCZNY ZRZUT] Zrobiłem zrzut pamięci przed samym krachem.\nMusisz przetłumaczyć go na tekst (ściąga: /usr/share/docs/base16.man). To najważniejsza wartość ze wszystkich."
         },
         'xor': {
-            fileToUnlock: 'etc/ssl/x_gate.enc',
+            fileToUnlock: 'etc/ssl',
             targetFile: 'etc/ssl/x_gate.enc',
             content: "[BRAMA] Ostatni zamek. Aktywowano bramkę logiczną XOR.\nMusisz zdekodować ukryty ciąg. Instrukcja znajduje się w /usr/share/docs/bool_log.man."
         },
@@ -173,7 +173,7 @@ export const TASK_HINTS_DATABASE = {
     // =========================================================
     4: {
         'hex': {
-            fileToUnlock: 'var',
+            fileToUnlock: 'var/crash',
             targetFile: 'var/crash/dump_0x4a.hex',
             content: "Wiedziałem, że kiedyś tu trafisz. Musisz zacząć od czegoś prostego, aby ożywić system.\nTabela pomocnicza schowana jest w /usr/share/docs/base16.man. Pokaż, na co cię stać."
         },
@@ -219,8 +219,8 @@ export const ANIMATION = {
 };
 
 // Theme Configuration
-export const THEMES = ['Green', 'Orange', 'Red'];
-export const DEFAULT_THEME = 'Green';
+export const THEMES = ['Orange', 'Green', 'Red'];
+export const DEFAULT_THEME = 'Orange';
 
 // Storage Keys
 export const STORAGE_KEY = 'retro-terminal-settings';
