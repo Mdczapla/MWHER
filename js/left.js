@@ -41,6 +41,8 @@ channel.onmessage = (event) => {
     case 'TASK_START':
       startTimer(() => {
           channel.postMessage({ type: 'GAME_OVER' });
+          stopRefreshTimeout();
+          gameover();
       });
       setActiveModule(payload.name);
       break;
@@ -55,7 +57,6 @@ channel.onmessage = (event) => {
       markModuleComplete("FINAL")
       stopTimer();
       stopRefreshTimeout();
-      // TODO: logika victory
       break;
     case 'CHANGE_THEME':
       applyTheme(payload.theme);

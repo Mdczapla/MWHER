@@ -88,7 +88,7 @@
     "   > task <odpowiedź>",
     "   Wprowadza rozwiązanie do systemu w celu weryfikacji. Przykłady:",
     "   Optymalizacja: task ALPHA-ECHO-FOXTROT-DELTA-BRAVO-CHARLIE",
-    "   Bazy danych:   task SELECT name FROM system WHERE id = 1",
+    "   Bazy danych:   task SELECT * FROM system",
     "   W przypadku niepoprawnej odpowiedzi system wypisze błąd.",
     "   ",
     "   [ 3. OSTRZEŻENIE SYSTEMOWE: CZAS ]",

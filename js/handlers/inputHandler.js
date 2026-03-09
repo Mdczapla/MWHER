@@ -114,9 +114,6 @@ async function handleEnterKey(terminalOutput, terminalInput) {
     const newOutputLine = document.createElement("div");
     terminalOutput.appendChild(newOutputLine);
 
-    commandHistory.push(inputText);
-    commandIndex = commandHistory.length;
-
     if (inputText.length > 0) {
       clearInput();
       terminalOutput.appendChild(newOutputLine);
@@ -128,6 +125,9 @@ async function handleEnterKey(terminalOutput, terminalInput) {
     scrollToBottom();
   }
 
+
+  commandHistory.push(inputText);
+  commandIndex = commandHistory.length;
 
   clearInput();
   terminalInput.focus();

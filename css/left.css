@@ -19,3 +19,19 @@
     z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
+
+@keyframes pulse-red {
+    0% { opacity: 1; text-shadow: 0 0 5px #ff0000; }
+    50% { opacity: 0.4; text-shadow: 0 0 20px #ff0000; }
+    100% { opacity: 1; text-shadow: 0 0 5px #ff0000; }
+}
+
+#timer-panel.timer-low {
+    color: #ff0000;
+    border-color: #ff0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+.timer-critical {
+    animation: pulse-red 0.5s infinite;
+}

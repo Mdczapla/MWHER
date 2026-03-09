@@ -69,7 +69,7 @@ export function initSettings() {
   applyLoadedSettings(currentSettings);
 
   const settingsButton = document.createElement('button');
-  settingsButton.textContent = '⚙ Settings';
+  settingsButton.textContent = '⚙';
   settingsButton.className = 'settings-button';
   document.body.appendChild(settingsButton);
 

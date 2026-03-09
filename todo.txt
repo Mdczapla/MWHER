@@ -2,3 +2,7 @@ Zadania
 
 ascii, parity, hex, sql, negabinary, matrix, xor, Hamilton
  txt , 	txt  , txt, jpg,    txt	   ,  jpg  , txt,   jpg
+
+możliwe dodanie (testerzy)
+
+- po wpisaniu shutdown.exe, zręcznościowa, polegająca na spadających literach, które musisz wpisywać, litery spadają na sam dół, jak będzie ich za dużo to przegrywasz/powtarzasz

@@ -169,6 +169,14 @@ function updateTimer(onGameOver) {
     
     currentTime--;
     timerEl.textContent = formatTime(currentTime);
+
+    if (currentTime <= 60) {
+        timerEl.classList.add('timer-low');
+    }
+
+    if (currentTime <= 10) {
+        timerEl.classList.add('timer-critical');
+    }
 }
 
 function formatTime(seconds) {
