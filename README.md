@@ -57,7 +57,7 @@ Follow these steps to run the game on your local machine:
    ```bash
    npx http-server -p 8000 -c-1
 
-      The -c-1 flag disables caching, which is recommended during testing.
+The -c-1 flag disables caching, which is recommended during testing.
 
 3. **Access the game:**
    Open your browser and navigate to: http://localhost:8000/start.html
