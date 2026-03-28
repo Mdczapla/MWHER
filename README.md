@@ -9,7 +9,7 @@
 
 ## 📝 About the Project
 
-This project serves as a demonstration of porting classic Escape Room mechanics into a virtual terminal environment. The primary research goal was to evaluate how a text-based interface impacts player immersion and how AI-driven narration can effectively build suspense.
+This project serves as a playable game and a demonstration of porting classic Escape Room mechanics into a virtual terminal environment. The primary research goal was to evaluate how a text-based interface impacts player immersion and how AI-driven narration can effectively build suspense.
 
 ### Core Project Pillars:
 * **Modular Architecture:** The system is designed with a clear, modular structure, allowing for easy expansion of new puzzles, file modules, and game logic.
