@@ -49,7 +49,7 @@ Follow these steps to run the game on your local machine:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/Mdczapla/MWHER.git](https://github.com/Mdczapla/MWHER.git)
+   git clone https://github.com/Mdczapla/MWHER.git
 
 2. **Start the server:**
    You can use any HTTP server. The simplest way is using http-server via npm:
