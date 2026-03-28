@@ -1,31 +1,66 @@
-# Retro-Terminal: Projekt Cisza
+# 📟 Retro-Terminal: Projekt Cisza
 
-A simple Escape Room style terminal emulator game built with JavaScript and Node.js.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Technology: JavaScript](https://img.shields.io/badge/Technology-JavaScript-f7df1e.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-# About the Project
-This project was created as an engineering thesis for educational and scientific purposes. It serves to demonstrate Escape Room game mechanics in a computer terminal environment.
+> **Project Silence** is an interactive Escape Room game set within a retro terminal emulator environment. Developed as an engineering thesis, this project merges puzzle-solving mechanics with the educational aspects of navigating text-based operating systems.
 
-## Key Features
+---
 
-- **Virtual File System:** Search for clues in game files and hidden directories.
-- **Timer:** Beware of time! When it reaches 0, you will lose the game and fail the mission.
-- **AI Narration:** The system uses **ElevenLabs** artificial intelligence to generate a suspenseful narrator's voice that introduces the player to the story.
-- **Iconic Audio Cues:** In case of failure (Game Over), the system plays the iconic alarm and scream known from the **Metal Gear Solid** series at the end of the game.
+## 📝 About the Project
 
-## How to Use (locally)
+This project serves as a demonstration of porting classic Escape Room mechanics into a virtual terminal environment. The primary research goal was to evaluate how a text-based interface impacts player immersion and how AI-driven narration can effectively build suspense.
 
-1. Clone the repository to your local machine.
-2. Start server e.g. `npx http-server -p 8000`
-   2.1. (Optional)* Use `-c-1` flag for disabling caching during development.
-3. Open `start.html`
-4. Start game
+### Core Project Pillars:
+* **Modular Architecture:** The system is designed with a clear, modular structure, allowing for easy expansion of new puzzles, file modules, and game logic.
+* **AI Narration:** Integration of **ElevenLabs** voice synthesis to create a unique, atmospheric, and high-stakes narrative experience.
+* **Interactive File System:** A realistic simulation of a VFS (Virtual File System) that requires analytical thinking and command-line proficiency from the player.
 
-============================================
+---
 
-### References & Credits
+## 🚀 Key Features
 
-* **Retro Terminal (Base Engine):** [https://github.com/ogulkokan/retro-terminal](https://github.com/ogulkokan/retro-terminal)
-* **Voice Synthesis:** Narration audio generated using [ElevenLabs](https://elevenlabs.io/)
-* **Sound Effects:** 
-Game Over audio inspired by [Metal Gear Solid - Game Over](https://www.youtube.com/watch?v=PbmkzEgYfWI)
-Victory audio inspired by [Metal Gear Solid - Mission Complete](https://www.youtube.com/watch?v=3KtQudl1ayQ)
+### 📂 Virtual File System (VFS)
+Explore hidden directories, search through system logs, and uncover encrypted clues. The system supports standard terminal commands, providing a realistic "hacker" feel.
+
+### ⏱️ Time Pressure
+A built-in countdown timer constantly tracks the seconds remaining. If the clock hits zero, the mission fails immediately, forcing the player to make quick, decisive moves under pressure.
+
+### 🎙️ Audio Immersion
+* **AI Narrator:** The system utilizes the ElevenLabs API to deliver voice-over lines that introduce the story and guide the player.
+* **Iconic Audio Cues:** Features legendary sound effects inspired by the **Metal Gear Solid** series (Scream, Mission Complete) to signal critical game states (Victory/Game Over).
+
+---
+
+## 🛠️ Tech Stack
+
+The game is built using modern web technologies to ensure high performance and ease of deployment:
+
+* **Frontend:** Vanilla JavaScript, HTML5, CSS3 (Retro CRT styling).
+* **Backend:** Node.js (for local development and server-side logic).
+* **Audio Engine:** ElevenLabs API (Speech Synthesis).
+* **Base Engine:** [Retro Terminal](https://github.com/ogulkokan/retro-terminal) – heavily modified and extended with custom logic modules.
+
+---
+
+## 💻 Local Setup
+
+Follow these steps to run the game on your local machine:
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/Mdczapla/MWHER.git](https://github.com/Mdczapla/MWHER.git)
+
+2. **Start the server:**
+   You can use any HTTP server. The simplest way is using http-server via npm:
+
+   ```bash
+   npx http-server -p 8000 -c-1
+
+      The -c-1 flag disables caching, which is recommended during testing.
+
+3. **Access the game:**
+   Open your browser and navigate to: http://localhost:8000/start.html
+
+4. **Begin the mission:** 
+   Follow the narrator's instructions displayed on the terminal.
