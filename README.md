@@ -1,6 +1,5 @@
 # 📟 Retro-Terminal: Projekt Cisza
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Technology: JavaScript](https://img.shields.io/badge/Technology-JavaScript-f7df1e.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 > **Project Silence** is an interactive Escape Room game set within a retro terminal emulator environment. Developed as an engineering thesis, this project merges puzzle-solving mechanics with the educational aspects of navigating text-based operating systems.
