@@ -178,9 +178,13 @@ export class SqlTask extends BaseTask {
         if (workingData.length === 0) return "(brak wyników)";
 
         // SELECT
-        const columns = selectPart.trim() === '*' 
-            ? Object.keys(workingData[0] || {}) 
-            : selectPart.split(',').map(c => c.trim());
+        let columns;
+        if (selectPart.trim() === '*') {
+            const allKeys = Object.keys(workingData[0] || {});
+            columns = allKeys.filter(key => !key.includes('.'));
+        } else {
+            columns = selectPart.split(',').map(c => c.trim());
+        }
 
         let output = columns.join(' | ') + '\n';
         output += '-'.repeat(output.length) + '\n';
