@@ -26,8 +26,8 @@ export class SqlTask extends BaseTask {
     _prefixRow(row, tableName) {
         const newRow = {};
         for (const key in row) {
-            newRow[`${tableName.toLowerCase()}.${key.toLowerCase()}`] = row[key];   // with prefix (sys.id)
-            //newRow[key] = row[key];                     // without prefix (id)
+            newRow[`${tableName.toLowerCase()}.${key.toLowerCase()}`] = row[key];    // with prefix (sys.id)
+            newRow[key] = row[key];                                                  // without prefix (id)
         }
         return newRow;
     }
