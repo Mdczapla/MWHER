@@ -1,6 +1,5 @@
 # 📟 Retro-Terminal: Projekt Cisza
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Technology: JavaScript](https://img.shields.io/badge/Technology-JavaScript-f7df1e.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 > **Project Silence** is an interactive Escape Room game set within a retro terminal emulator environment. Developed as an engineering thesis, this project merges puzzle-solving mechanics with the educational aspects of navigating text-based operating systems.
@@ -9,7 +8,7 @@
 
 ## 📝 About the Project
 
-This project serves as a demonstration of porting classic Escape Room mechanics into a virtual terminal environment. The primary research goal was to evaluate how a text-based interface impacts player immersion and how AI-driven narration can effectively build suspense.
+This project serves as a playable game and a demonstration of porting classic Escape Room mechanics into a virtual terminal environment. The primary research goal was to evaluate how a text-based interface impacts player immersion and how AI-driven narration can effectively build suspense.
 
 ### Core Project Pillars:
 * **Modular Architecture:** The system is designed with a clear, modular structure, allowing for easy expansion of new puzzles, file modules, and game logic.
@@ -49,7 +48,7 @@ Follow these steps to run the game on your local machine:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/Mdczapla/MWHER.git](https://github.com/Mdczapla/MWHER.git)
+   git clone https://github.com/Mdczapla/MWHER.git
 
 2. **Start the server:**
    You can use any HTTP server. The simplest way is using http-server via npm:
@@ -57,7 +56,7 @@ Follow these steps to run the game on your local machine:
    ```bash
    npx http-server -p 8000 -c-1
 
-      The -c-1 flag disables caching, which is recommended during testing.
+The -c-1 flag disables caching, which is recommended during testing.
 
 3. **Access the game:**
    Open your browser and navigate to: http://localhost:8000/start.html
