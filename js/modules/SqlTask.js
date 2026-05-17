@@ -181,7 +181,12 @@ export class SqlTask extends BaseTask {
         let columns;
         if (selectPart.trim() === '*') {
             const allKeys = Object.keys(workingData[0] || {});
-            columns = allKeys.filter(key => !key.includes('.'));
+            const uniqueCols = new Set();
+            allKeys.forEach(key => {
+                const colName = key.includes('.') ? key.split('.')[1] : key;
+                uniqueCols.add(colName);
+            });
+            columns = Array.from(uniqueCols);
         } else {
             columns = selectPart.split(',').map(c => c.trim());
         }
