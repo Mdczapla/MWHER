@@ -26,10 +26,18 @@ export class SqlTask extends BaseTask {
     _prefixRow(row, tableName) {
         const newRow = {};
         for (const key in row) {
-            newRow[`${tableName.toLowerCase()}.${key.toLowerCase()}`] = row[key];    // with prefix (sys.id)
-            newRow[key] = row[key];                                                  // without prefix (id)
+            newRow[`${tableName.toLowerCase()}.${key.toLowerCase()}`] = row[key];    // with prefix (system.id)
         }
         return newRow;
+    }
+
+    _getValue(row, column) {
+        if (row[column] !== undefined) return row[column];
+        if (!column.includes('.')) {
+            const key = Object.keys(row).find(k => k === column || k.endsWith('.' + column));
+            return key ? row[key] : undefined;
+        }
+        return undefined;
     }
 
     init() {
@@ -181,25 +189,40 @@ export class SqlTask extends BaseTask {
         let columns;
         if (selectPart.trim() === '*') {
             const allKeys = Object.keys(workingData[0] || {});
-            const uniqueCols = new Set();
+            const nameCount = {};
             allKeys.forEach(key => {
-                const colName = key.includes('.') ? key.split('.')[1] : key;
-                uniqueCols.add(colName);
+                const name = key.includes('.') ? key.split('.')[1] : key;
+                nameCount[name] = (nameCount[name] || 0) + 1;
             });
-            columns = Array.from(uniqueCols);
+
+            columns = allKeys.map(key => {
+                const name = key.includes('.') ? key.split('.')[1] : key;
+                return {
+                    key,
+                    label: nameCount[name] > 1 ? key : name,
+                };
+            }).filter((col, index, arr) => {
+                if (col.label === col.key) return true;
+                return arr.findIndex(item => item.label === col.label) === index;
+            });
         } else {
-            columns = selectPart.split(',').map(c => c.trim());
+            columns = selectPart.split(',').map(c => {
+                const requested = c.trim();
+                return {
+                    key: requested,
+                    label: requested.includes('.') ? requested.split('.').pop() : requested,
+                };
+            });
         }
 
-        let output = columns.join(' | ') + '\n';
+        const header = columns.map(col => col.label).join(' | ');
+        let output = header + '\n';
         output += '-'.repeat(output.length) + '\n';
 
         output += workingData.map(row => {
             return columns.map(col => {
-                if (row[col] !== undefined) return row[col];
-                
-                const matchKey = Object.keys(row).find(k => k.endsWith('.' + col) || k === col);
-                return matchKey ? row[matchKey] : 'NULL';
+                const value = this._getValue(row, col.key);
+                return value !== undefined ? value : 'NULL';
             }).join(' | ');
         }).join('\n');
 
