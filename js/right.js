@@ -10,6 +10,7 @@ import { theme, fullscreen } from './handlers/globalHandlers.js';
 import { initAudio } from './audio/audioManager.js';
 import { loadConfig } from './config/configLoader.js';
 import { initDOMCache } from './utils/domCache.js';
+import { applyTheme } from './config/settings.js';
 
 const channel = new BroadcastChannel('mher_sync');
 

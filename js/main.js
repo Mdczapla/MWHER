@@ -7,7 +7,7 @@ import { init } from './init.js';
 import { initCursor } from './terminal/cursor.js';
 import { showWelcomeMessage, gameover, showASCIITasks, executeShutdown, endSession } from './terminal/terminal.js';
 import { handleClick, theme, fullscreen, globalListener } from './handlers/globalHandlers.js';
-import { initSettings } from "./config/settings.js";
+import { initSettings, applyTheme } from "./config/settings.js";
 import { initAudio, stopNarrator, playGameOver, playRadarSound, playGlitchSound, playVictorySound, playPowerDownSound, playSuccessSound } from './audio/audioManager.js';
 import { loadConfig } from './config/configLoader.js';
 import { initDOMCache } from './utils/domCache.js';

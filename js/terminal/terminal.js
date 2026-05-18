@@ -245,7 +245,7 @@ export function processCommand(inputText) {
 			return userCommand + "\n" + processTaskInput("shutdown.exe");
 		case "theme":
 			argument = userCommand.split(" ").slice(1).join(" ").trim();
-			if(argument === 'orange' || argument === 'green'){
+			if(argument === 'orange' || argument === 'green' || argument === 'red'){
 				channel.postMessage({
 					type: 'CHANGE_THEME',
 					payload: {
